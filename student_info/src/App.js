@@ -3,6 +3,7 @@ import './App.css';
 import InfoInput from './components/InfoInput';
 import StudentInfo from './components/StudentInfo';
 import { useEffect, useRef, useState } from 'react';
+import InfoButton from './components/InfoButton';
 
   function App() {
   
@@ -14,23 +15,28 @@ import { useEffect, useRef, useState } from 'react';
 
   const [ student, setStudent ] = useState(studentObj)
   const [ inputValues, setInputValues ] = useState(studentObj)
-  const [ refresh, setRefresh ] = useState(false);
-  const nameInputRef = useRef();
+  // const [ refresh, setRefresh ] = useState(false);
+  const inputRef = {
+    name: useRef(),
+    age: useRef(),
+    address: useRef()
+  }
+  
   
   // html 변화 인지 -> 무조건 1회는 동작[] -> 값이 바뀌면 동작 -> 순서가 필요할때 사용
   useEffect(() => {
-    console.log(nameInputRef.current);
-  });
-
-
+    console.log(inputRef.name.current);
+  }, [])
   /*
   js객체 특징
   1. 키값은 문자열이어도 된다
   2. 변수의 문자열 값을 키값으로 쓰고 싶을 때 []대괄호를 묶어서 참조할 수 있다.
   3. 변수명만 입력하면 객체의 속성과 value로 한번에 정의할 수 있다.
   */
+  useEffect(() => {
+    setInputValues(studentObj);
 
-  
+  }, [student]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +53,7 @@ import { useEffect, useRef, useState } from 'react';
     setStudent(inputValues);
   }
 
-  const handleDeleteClick = () => {
+  const handleOnClean = () => {
     setStudent(studentObj);
   }
 
@@ -62,24 +68,25 @@ import { useEffect, useRef, useState } from 'react';
       placeholder={"이름"}
       onChange={handleInputChange}
       value={inputValues.name}
-      ref={nameInputRef}
+      inputRef={inputRef.name}
     />
     <InfoInput name={"age"}
       placeholder={"나이"}
       onChange={handleInputChange}
       value={inputValues.age}
-      ref={nameInputRef}
+      inputRef={inputRef.age}
     />
     <InfoInput name={"address"}
       placeholder={"주소"}
       onChange={handleInputChange}
       value={inputValues.address}
-      ref={nameInputRef}
+      inputRef={inputRef.address}
     />
     
-    {/* children - 자식요소 */}
-      <button onClick={handleOnOk}>확인</button>
-      <button onClick={handleDeleteClick}>비우기</button>
+      <InfoButton>
+        <button onClick={handleOnOk}>확인</button>
+        <button onClick={handleOnClean}>비우기</button>
+      </InfoButton>
     </>
   );
 }

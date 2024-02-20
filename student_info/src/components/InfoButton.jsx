@@ -1,6 +1,6 @@
 import React from 'react';
 
-function InfoButtons({ children }) {
+function InfoButton({ children }) {
     return (
         <div>
             { children }
@@ -8,4 +8,4 @@ function InfoButtons({ children }) {
     );
 }
 
-export default InfoButtons;
+export default InfoButton;

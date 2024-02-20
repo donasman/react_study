@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-function InfoInput ({name, value, onChange, placeholder, ref}) {
+function InfoInput ({name, value, onChange, placeholder, inputRef}) {
 
     return (
         <input type="text" 
@@ -8,9 +8,12 @@ function InfoInput ({name, value, onChange, placeholder, ref}) {
             placeholder={placeholder} 
             onChange={onChange} 
             value={value}
-            ref={ref}/>
-
+            ref={inputRef}/>
     );
 };
+
+InfoInput.defaultProps = {
+    ref: null
+}
 
 export default InfoInput;
