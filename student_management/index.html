@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" placeholder="name">
+    <input type="text" placeholder="age">
+    <button onclick="handleAddClick();">추가</button>
+    <ul>
+        
+    </ul>
+    <script>
+        // ctrl + ` -> node -v -> npm -v -> npx create-react-app hello_react -> npm remove npm -> npm install npm
+        // 수동 : c: -> 사용자 -> ITPS -> AppData -> Roaming -> npm폴더생성
+        const studentList = [];
+
+        function handleAddClick() {
+            const inputs = document.querySelectorAll("input");
+            const student = {
+                name: inputs[0].value,
+                age: inputs[1].value
+            }
+
+
+
+            // studentList = [...studentList, student];
+
+            const studnetInfoList = document.querySelector("ul");
+
+            const newLi = document.createElement("li");
+
+            // const studnetInfoText = 
+            //     document.createTextNode(`이름: ${student.name} / 나이: ${student.age}`);
+            
+
+            // const deleteButton = document.createElement("button");
+            // const deleteButtonName = document.createTextNode("삭제");
+
+            // deleteButton.appendChild(deleteButtonName);
+            
+            // newLi.appendChild(studnetInfoText);
+
+            // newLi.appendChild(deleteButton);
+            // studnetInfoList.appendChild(newLi);
+
+            // deleteButton.onclick = () => {
+            //     studnetInfoList.removeChild(newLi);
+            // }
+            
+            // innerHTML -> 객체가 새로 생성 이벤트가 삭제됨
+            studnetInfoList.innerHTML += `<li>이름: ${student.name} / 나이: ${student.age}
+                                        <button class="delete-button"> 삭제</button></li>`;
+            
+            const deleteButtons = document.querySelectorAll(".delete-button");
+
+            for(let i = 0; i < deleteButtons.length; i++) {
+                deleteButtons[i].onclick = () => {  
+                    const li = studnetInfoList.querySelectorAll("li")[i]
+                    studnetInfoList.removeChild(li);
+                }
+            }
+
+
+            function handleRemoveClick(e) {
+                const studnetInfoList = document.querySelector("ul");
+                studnetInfoList.removeChild(e.target.parentNode);
+            }
+
+        }
+        // function StudnetInfo({name, age}) {
+        //     return
+        // }
+    </script>
+</body>
+</html>
