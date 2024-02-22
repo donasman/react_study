@@ -1,19 +1,25 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
-function InfoInput ({name, value, onChange, placeholder, inputRef}) {
+const InfoInput = ({name, onChange, value, placeholder, inputRef}) => {
 
-    return (
-        <input type="text" 
-            name={name} 
-            placeholder={placeholder} 
-            onChange={onChange} 
-            value={value}
-            ref={inputRef}/>
-    );
+  
+
+  // console.log(inputRef.current.name); // e.target.name 과 같음
+
+  return (
+    <input type="text"
+      name={name}
+      onChange={onChange}
+      value={value}
+      placeholder={placeholder}
+      ref={inputRef}/>
+      
+  );
+
+  
 };
-
-InfoInput.defaultProps = {
-    ref: null
+InfoInput.defalultProps = {
+  ref: null
 }
 
 export default InfoInput;
