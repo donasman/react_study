@@ -4,7 +4,7 @@ import { Reset } from 'styled-reset';
 import SideBar from './compenents/SideBar/SideBar';
 import SideBarTop from './compenents/SideBarTop/SideBarTop';
 import RootLayout from './compenents/RootLayout/RootLayout';
-import Mypage from './compenents/pages/Mypage/Mypage';
+import { MENUS } from './constants/menu';
 
 
 function App() {
@@ -15,13 +15,12 @@ function App() {
       <SideBarTop />
       <RootLayout>
         <Routes>
-          <Route path='/mypage' element={<Mypage />} />
-          <Route path='/board' element={<>게시판</>}/>
-          <Route path='/notice' element={<>공지사항</>}/>
+          {MENUS.map ((menu,index) => <Route key={index} path={menu.path} element={menu.element} />)}
         </Routes>
       </RootLayout>
     </>
-  );
-}
+  )
+};
+
 
 export default App;

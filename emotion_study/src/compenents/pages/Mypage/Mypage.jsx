@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import * as S from './style';
-import logo512 from "./logo512.png"
 import React, { useRef, useState } from 'react';
 
 
@@ -30,7 +29,6 @@ function Mypage(props) {
                 <div css={S.profileImg} onClick={() => {imgFileRef.current.click();}}>
                     <img src={preview} alt="" />
                     <input style={{display:"none"}} type="file" ref={imgFileRef} onChange={handleImgFileChange}/>
-                    
                 </div>
                 <div css={S.nicknameLayout}>
                     <input css={S.nickname} type="text" maxLength={20} />
