@@ -45,25 +45,11 @@ function Image() {
 
         promises.map(file => new Promise((resolve) => {
             const storageRef = ref(storage,`files/test/${uuid()}_${file.name}`);
-            const uploadTask = uploadBytesResumable(storageRef, file);
+            uploadBytesResumable(storageRef, file);
+            
         }))
 
-        const storageRef = ref(storage,`files/test/${uuid()}_${file.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, file);
-        uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-                setProgressPercent(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100))
-            },
-            (error) => {},
-            () => {
-                getDownloadURL(storageRef).then(url => {
-                    localStorage.setItem("url", url);
-                    setUrls(url);
-                    setPreviews([]);
-                });
-            }
-        );
+        
     }
     
     const handleImageChange = (e) => {
