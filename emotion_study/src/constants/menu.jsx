@@ -1,4 +1,3 @@
-import BoardEx from "../compenents/pages/BoardEX/BoardEx";
 import BoardList from "../compenents/pages/BoardList/BoardList";
 import BoardWrite from "../compenents/pages/BoardWrite/BoardWrite";
 import Image from "../compenents/pages/ImageEx/Image";
@@ -59,6 +58,9 @@ export const MENUS = [
     {
         id: 9,
         path: "/board/list",
+        params: {
+            page:1
+        },
         name: "게시글 목록",
         element:<BoardList />
     },

@@ -53,18 +53,22 @@ const submitButton = css`
 function BoardWrite(props) {
 
     const navigate = useNavigate();
-    const [ inputValue, handleInputChange ] = useMaxSizeValidateInput(10);
+    const [ inputValue, handleInputChange ] = useMaxSizeValidateInput(20);
     const [ quillValue, handleQuillValueChange ] = useQuillInput();
-    const { boardList, lastId } = useLoadList();
+    const { boardList, size } = useLoadList();
 
     const handleSubmitClick = () => {
-        const board = {
-            boardId: lastId + 1,
-            boardTitle: inputValue,
-            boardContent: quillValue
-        };
+        let newBoardList = [];
+        for(let i = 0; i < 215; i++) {
+            const board = {
+                boardId: i + 1,
+                boardTitle: inputValue + (i + 1),
+                boardContent: quillValue
+            };
 
-        const newBoardList = [...boardList, board];
+            newBoardList = [...newBoardList, board];
+        }
+        
         localStorage.setItem("boardList", JSON.stringify(newBoardList));
         alert("글 작성 완료.");
         navigate("/board/list")
