@@ -23,7 +23,7 @@ function SingupPage() {
             setCheckPasswordMessage(() => null);
             return;
         };
-        if(checkPassword == password) {
+        if(checkPassword === password) {
             setCheckPasswordMessage(() => {
                 return {
                     type: "succees",
