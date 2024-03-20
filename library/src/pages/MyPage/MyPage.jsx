@@ -1,11 +1,21 @@
 /** @jsxImportSource @emotion/react */
-import { useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import * as s from "./style";
+import { sendAuthMailRequest } from "../../apis/api/sendAuthMail";
 
 function MyPage(props) {
     const queryClient = useQueryClient();
     const principalData = queryClient.getQueryData("principalQuery");
-    console.log(principalData)
+    const sendAuthMailMutation = useMutation({
+        mutationKey: "sendAuthMailRequest",
+        mutationFn: sendAuthMailRequest,
+        retry: 0
+    }); //react-query 라이브러리에서 get요청을 제외한 요청은 useMutation사용, 매개변수로 키와 함수 넣기
+
+    const handleSendAuthMail = () => {
+        sendAuthMailMutation.mutate(); // mutate를 호출하면sendAuthMailMutation안에 있는 함수가 호출됨
+    }
+
     
     return (
         <div css={s.layout}>
@@ -24,7 +34,7 @@ function MyPage(props) {
                         {
                             principalData.data.authorities.filter(auth => auth.authority ==="ROLE_USER").length === 0 
                             ? 
-                            <button css={s.infoButton}>인증하기</button>
+                            <button css={s.infoButton} onClick={handleSendAuthMail}>인증하기</button>
                             :
                             <>체크</>
                         }
