@@ -3,7 +3,7 @@ import * as s from "./style"
 import { useRecoilState } from "recoil";
 import { menuState } from "../../atoms/menuAtom";
 import { HiMenu } from "react-icons/hi"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiUser,FiLogOut } from "react-icons/fi";
 import { principalState } from "../../atoms/principalAtom";
 import { useQueryClient } from "react-query";
@@ -12,7 +12,7 @@ import axios from "axios";
 import instance from "../../apis/utils/instance";
 
 function RootHeader() {
-
+    const navigate = useNavigate();
     const [ show, setShow ] = useRecoilState(menuState);
     const [ isLogin, setIsLogin ] = useState(false);
     const queryClient = useQueryClient(); 
@@ -34,6 +34,7 @@ function RootHeader() {
         localStorage.removeItem("AccessToken");
         instance.interceptors.request.use((config) => { // 요청을 보내기 전에 낚아채라
             config.headers.Authorization = null; // 낚아챈것을 설정한다
+            navigate("/auth/signin");
             return config;
         });
 
