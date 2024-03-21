@@ -4,10 +4,12 @@ import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import RightTopButton from "../../components/RightTopButton/RightTopButton";
 import { useInput } from "../../hooks/useInput";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { signupRequest } from "../../apis/api/signup";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { oAuth2SignupRequest, signupRequest } from "../../apis/api/signup";
+import { useMutation } from "react-query";
 
-function SingupPage() {
+function OAuth2SignupPage(props) {
+    const [ searchParams ] = useSearchParams();
     const navigate = useNavigate();
 
     const [ username, userNameChange, usernameMessage, setUsernameValue, setUsernameMessage ] = useInput("username");
@@ -16,6 +18,34 @@ function SingupPage() {
     const [ name,nameChange, nameMessage ] = useInput("name");
     const [ email, emailChange, emailMessage] = useInput("email");
     const [ checkPasswordMessage, setCheckPasswordMessage] = useState(null);
+
+    const oAuth2SignupMutation = useMutation({
+        mutationKey: "oAuth2SignupMutation",
+        mutationFn: oAuth2SignupRequest,
+        onSuccess: response => {
+            navigate("/auth/signin");
+        },
+        onError: error => {
+            if(error.response.status === 400) {
+                const errorMap = error.response.data;
+                const errorEntries = Object.entries(errorMap);
+                for(let [ k, v ] of errorEntries) {
+                    if( k === "username") {
+                        setUsernameMessage(() => {
+                            return {
+                                type: "error",
+                                text: v
+                            }
+                
+                        })
+                    }
+                }
+            } else {
+                alert("회원가입 오류")
+            }
+        },
+        retry: 0,
+    });
 
     useEffect(() => {
         if(!checkPassword || !password) {
@@ -54,36 +84,16 @@ function SingupPage() {
             return;
         }
 
-        signupRequest({
+        oAuth2SignupMutation.mutate({
             username,
             password,
             name,
-            email
-        }).then(response => {
-            console.log(response);
-            if(response.status === 201){
-                navigate("/auth/signin");
-            }
-        }).catch(error => {
-            if(error.response.status === 400) {
-                const errorMap = error.response.data;
-                const errorEntries = Object.entries(errorMap);
-                for(let [ k, v ] of errorEntries) {
-                    if( k === "username") {
-                        setUsernameMessage(() => {
-                            return {
-                                type: "error",
-                                text: v
-                            }
-                
-                        })
-                    }
-                }
-            } else {
-                alert("회원가입 오류")
-            }
-        })
-    };
+            email,
+            oauth2Name: searchParams.get("name"),
+            providerName: searchParams.get("provider")
+        });
+
+    }
 
 
     
@@ -91,7 +101,7 @@ function SingupPage() {
     return (
         <>
             <div css={s.header}>
-                <h1>회원가입</h1>
+                <h2>회원가입({searchParams.get("provider")})</h2>
                 <RightTopButton onClick={handleSignupSubmit}>가입하기</RightTopButton>
             </div>
             <AuthPageInput type={"text"} name={"username"} placeholder={"사용자 이름"} value={username} onChange={userNameChange} message={usernameMessage} />
@@ -104,4 +114,6 @@ function SingupPage() {
 
 }
 
-export default SingupPage;
+
+
+export default OAuth2SignupPage;
