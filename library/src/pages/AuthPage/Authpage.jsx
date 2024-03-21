@@ -6,8 +6,20 @@ import SigninPage from "../SigninPage/SigninPage";
 import OAuth2page from "../OAuth2Page/OAuth2page";
 import OAuth2SignupPage from "../OAuth2SignupPage/OAuth2SignupPage";
 import OAuthSigninPage from "../OAuthSigninPage/OAuthSigninPage";
+import { useQueryClient } from "react-query";
+import { useEffect } from "react";
 
 function Authpage(props) {
+    const queryClient = useQueryClient();
+    const principalData = queryClient.getQueryData("principalQuery");
+
+    useEffect(() => {
+        if(!!principalData) {
+            alert("잘못된 접근입니다.");
+            window.location.replace("/");
+        }
+    }, []);
+
     return (
         <div css={s.layout}>
             <Routes>
