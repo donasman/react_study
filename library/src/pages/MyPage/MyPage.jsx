@@ -2,11 +2,14 @@
 import { useMutation, useQueryClient } from "react-query";
 import * as s from "./style";
 import { sendAuthMailRequest } from "../../apis/api/sendAuthMail";
-import FullsizeLoader from "../../components/FullSizeLoader/FullSizeLoader";
 import { GoCheckCircle } from "react-icons/go";
 import { GridLoader } from "react-spinners";
+import { useAuthCheck } from "../../hooks/useAuthCheck";
+import { useNavigate } from "react-router-dom";
 
 function MyPage(props) {
+    useAuthCheck();
+    const navigate = useNavigate();
     const queryClient = useQueryClient();
     const principalData = queryClient.getQueryData("principalQuery");
     const sendAuthMailMutation = useMutation({
@@ -23,6 +26,7 @@ function MyPage(props) {
     }); //react-query 라이브러리에서 get요청을 제외한 요청은 useMutation사용, 매개변수로 키와 함수 넣기
 
     const handleSendAuthMail = () => {
+        console.log(principalData.data.authorities);
         sendAuthMailMutation.mutate(); // mutate를 호출하면sendAuthMailMutation안에 있는 함수가 호출됨
     }
 
@@ -37,12 +41,12 @@ function MyPage(props) {
                         </div>
                     </div>
                     <div css={s.infoBox}>
-                        <div css={s.infoText}>사용자이름: {principalData.data.username}</div>
-                        <div css={s.infoText}>이름: {principalData.data.name}</div>
+                        <div css={s.infoText}>사용자이름: {principalData?.data.username}</div>
+                        <div css={s.infoText}>이름: {principalData?.data.name}</div>
                         <div css={s.emailBox}>
-                            <div css={s.infoText}>이메일: {principalData.data.email}</div>
+                            <div css={s.infoText}>이메일: {principalData?.data.email}</div>
                             {
-                            principalData.data.authorities.filter(auth => auth.authority === "ROLE_USER").length === 0 ? (
+                            principalData?.data.authorities.filter(auth => auth.authority === "ROLE_USER").length === 0 ? (
                                 <>
                                     {
                                         sendAuthMailMutation.isLoading ? (
@@ -62,7 +66,7 @@ function MyPage(props) {
                         </div>
                         <div css={s.infoButtons}>
                             <button css={s.infoButton}>정보 수정</button>
-                            <button css={s.infoButton}>비밀번호 수정</button>
+                            <button css={s.infoButton} onClick={() => navigate("/account/edit/password")}>비밀번호 수정</button>
                         </div>
                     </div>
                 </div>

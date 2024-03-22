@@ -8,6 +8,8 @@ import OAuth2SignupPage from "../OAuth2SignupPage/OAuth2SignupPage";
 import OAuthSigninPage from "../OAuthSigninPage/OAuthSigninPage";
 import { useQueryClient } from "react-query";
 import { useEffect } from "react";
+import OAuth2MergePage from "../OAuth2MergePage/OAuth2MergePage";
+import PasswordEditPage from "../PasswordEditPage/PasswordEditPage";
 
 function Authpage(props) {
     const queryClient = useQueryClient();
@@ -27,7 +29,7 @@ function Authpage(props) {
                 <Route path='/signup' element={ <SignupPage /> }/>
                 <Route path='/oauth2' element={<OAuth2page />} />
                 <Route path='/oauth2/signin' element={ <OAuthSigninPage /> }/>
-                <Route path='/oauth2/merge' />
+                <Route path='/oauth2/merge' element={ <OAuth2MergePage /> }/>
                 <Route path='/oauth2/signup' element={<OAuth2SignupPage />}/>
             </Routes>
 

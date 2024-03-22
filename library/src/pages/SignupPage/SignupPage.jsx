@@ -13,7 +13,7 @@ function SingupPage() {
     const [ username, userNameChange, usernameMessage, setUsernameValue, setUsernameMessage ] = useInput("username");
     const [ password, passwordChange, passwordMessage ] = useInput("password");
     const [ checkPassword, checkPasswordChange ] = useInput("checkPassword");
-    const [ name,nameChange, nameMessage ] = useInput("name");
+    const [ name, nameChange, nameMessage ] = useInput("name");
     const [ email, emailChange, emailMessage] = useInput("email");
     const [ checkPasswordMessage, setCheckPasswordMessage] = useState(null);
 
@@ -67,6 +67,7 @@ function SingupPage() {
         }).catch(error => {
             if(error.response.status === 400) {
                 const errorMap = error.response.data;
+                console.log(errorMap)
                 const errorEntries = Object.entries(errorMap);
                 for(let [ k, v ] of errorEntries) {
                     if( k === "username") {

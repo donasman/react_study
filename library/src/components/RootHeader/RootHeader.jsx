@@ -32,14 +32,12 @@ function RootHeader() {
     
     const handleLogoutClick = () => {
         localStorage.removeItem("AccessToken");
-        instance.interceptors.request.use((config) => { // 요청을 보내기 전에 낚아채라
-            config.headers.Authorization = null; // 낚아챈것을 설정한다
-            navigate("/auth/signin");
-            return config;
-        });
-
-        queryClient.refetchQueries("principalQuery");
-
+        // instance.interceptors.request.use((config) => { // 요청을 보내기 전에 낚아채라
+        //     config.headers.Authorization = null; // 낚아챈것을 설정한다
+        //     return config;
+        // });
+        // queryClient.refetchQueries("principalQuery");
+        window.location.replace("/auth/signin");
     }
 
     return (
