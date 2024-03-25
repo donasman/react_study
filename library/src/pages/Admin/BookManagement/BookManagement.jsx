@@ -86,8 +86,8 @@ function BookManagement(props) {
     const submit = () => {
         registerBookMutation.mutate({
             isbn: isbn.value,
-            bookTypeId: bookTypeId.value.value,
-            categoryId: categoryId.value.value,
+            bookTypeId: bookTypeId.value,
+            categoryId: categoryId.value,
             bookName: bookName.value,
             authorName: authorName.value,
             publisherName: publisherName.value,
