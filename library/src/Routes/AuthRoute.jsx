@@ -1,18 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { principalState } from "../atoms/principalAtom";
-import { useRecoilState } from "recoil";
 import { getPrincipalRequest } from "../apis/api/principal";
 import Authpage from "../pages/AuthPage/Authpage";
 import HomePage from "../pages/HomePage/HomePage";
 import { useQuery } from "react-query";
 import RootSideMenuLeft from "../components/RootSideMenuLeft/RootSideMenuLeft";
 import RootHeader from "../components/RootHeader/RootHeader";
-import { GridLoader } from "react-spinners";
 import FullSizeLoader from "../components/FullSizeLoader/FullSizeLoader";
 import MyPage from "../pages/MyPage/MyPage";
 import PageContainer from "../components/PageContainer/PageContainer";
 import PasswordEditPage from "../pages/PasswordEditPage/PasswordEditPage";
+import BookManagement from "../pages/Admin/BookManagement/BookManagement";
 
 // useQuery => get요청시에 사용
 // 첫번째 매개변수 => 배열 ["key값", dependency]
@@ -61,6 +58,7 @@ function AuthRoute(props) {
                         <Route path="/" element={ <HomePage />} />
                         <Route path="/account/mypage" element={ <MyPage />} />
                         <Route path='/account/edit/password' element={ <PasswordEditPage />}/>
+                        <Route path='/admin/book/management' element={ <BookManagement /> } />
                     </Routes>
                 }
             </PageContainer>
