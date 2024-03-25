@@ -4,7 +4,12 @@ export const useBookRegisterInput = (enterFn, ref) => {
     const [ value, setValue ] = useState("");
 
     const handleOnChange = (e) => {
-        setValue(() => e.target.value);
+        if(!!e.target) {
+            setValue(() => e.target.value);
+        } else {
+            setValue(() => e);
+        }
+        
     }
 
     const handleOnKeyDown = (e) => {

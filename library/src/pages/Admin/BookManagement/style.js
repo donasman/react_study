@@ -77,7 +77,6 @@ export const imgURLBox = css`
     display: inline-block;
     width: 90%;
     line-height: 10px;
-
 `;
 
 
