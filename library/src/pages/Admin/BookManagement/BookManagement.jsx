@@ -13,12 +13,14 @@ import {v4 as uuid} from "uuid";
 import { upload } from "@testing-library/user-event/dist/upload";
 import RightTopButton from "../../../components/RightTopButton/RightTopButton";
 import { registerBook } from "../../../apis/api/bookApi";
+import AdminBookSearch from "../../../components/AdminBookSearch/AdminBookSearch";
 
 
 function BookManagement(props) {
     
     const [ bookTypeOptions, setBookTypeOptions ] = useState([]);
     const [ categoiryOptions, setCategoriyOptions ] = useState([]);
+
     const fileRef = useRef();
     const inputRefs = [
         useRef(), // 0 bookId
@@ -263,8 +265,12 @@ function BookManagement(props) {
                         </tr>     
                     </tbody>
                 </table>
-                <div></div>
             </div>
+                <AdminBookSearch 
+                    selectStyle={selectStyle} 
+                    bookTypeOptions={bookTypeOptions}
+                    categoryOptions={categoiryOptions}
+                />
         </div>
     );
 }
